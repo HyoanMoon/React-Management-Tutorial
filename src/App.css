@@ -1,3 +1,8 @@
 .gray-background {
   background: darkgray;
 }
+.profile-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%; /* 원형 이미지 */
+}
