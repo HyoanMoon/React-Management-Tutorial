@@ -1,5 +1,14 @@
 import "./App.css";
 import Customer from "./components/Customer";
+import {
+  Table,
+  TableHead,
+  TableBody,
+  TableRow,
+  TableCell,
+  Paper,
+} from "@mui/material";
+
 
 const customers = [
   {
@@ -33,21 +42,45 @@ const customers = [
 
 function App() {
   return (
-    <div>
-      {customers.map((customer) => {
-        return (
-          <Customer
-            key={customer.id}
-            id={customer.id}
-            image={customer.image}
-            name={customer.name}
-            birthday={customer.birthday}
-            gender={customer.gender}
-            job={customer.job}
-          />
-        );
-      })}
-    </div>
+    <Paper
+      sx={{
+        width: "100%",
+        marginTop: 3,
+        overflowX: "auto",
+      }}
+    >
+      <Table
+        sx={{
+          minWidth: 1080,
+        }}
+      >
+        <TableHead>
+          <TableRow>
+            <TableCell>Num</TableCell>
+            <TableCell>Profile</TableCell>
+            <TableCell>Name</TableCell>
+            <TableCell>DOB</TableCell>
+            <TableCell>Gender</TableCell>
+            <TableCell>Job</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {customers.map((customer) => {
+            return (
+              <Customer
+                key={customer.id}
+                id={customer.id}
+                image={customer.image}
+                name={customer.name}
+                birthday={customer.birthday}
+                gender={customer.gender}
+                job={customer.job}
+              />
+            );
+          })}
+        </TableBody>
+      </Table>
+    </Paper>
   );
 }
 
