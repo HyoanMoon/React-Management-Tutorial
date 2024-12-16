@@ -8,17 +8,32 @@ import {
   TableRow,
   TableCell,
   Paper,
+  CircularProgress,
 } from "@mui/material";
 
 function App() {
-  const [customers, setCustomers] = useState([]); // 초기값을 빈 배열로 설정
+  const [customers, setCustomers] = useState([]); // 초기값 빈 배열
+  const [completed, setCompleted] = useState(0);
 
+  const progress = () => {
+    setCompleted((prevCompleted) =>
+      prevCompleted >= 100 ? 0 : prevCompleted + 1
+    );
+  };
+
+  // 타이머 설정
+  useEffect(() => {
+    const timer = setInterval(progress, 20);
+    return () => clearInterval(timer); // Cleanup
+  }, []);
+
+  // API 호출
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch("/api/customers");
         const res = await response.json();
-        setCustomers(res);
+        setCustomers(res); // 테스트 후 활성화
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -26,19 +41,19 @@ function App() {
     fetchData();
   }, []);
 
+  const paperStyles = {
+    width: "100%",
+    marginTop: 3,
+    overflowX: "auto",
+  };
+
+  const tableStyles = {
+    minWidth: 1080,
+  };
+
   return (
-    <Paper
-      sx={{
-        width: "100%",
-        marginTop: 3,
-        overflowX: "auto",
-      }}
-    >
-      <Table
-        sx={{
-          minWidth: 1080,
-        }}
-      >
+    <Paper sx={paperStyles}>
+      <Table sx={tableStyles}>
         <TableHead>
           <TableRow>
             <TableCell>Num</TableCell>
@@ -50,8 +65,8 @@ function App() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {customers.map((customer) => {
-            return (
+          {customers.length > 0 ? (
+            customers.map((customer) => (
               <Customer
                 key={customer.id}
                 id={customer.id}
@@ -61,8 +76,18 @@ function App() {
                 gender={customer.gender}
                 job={customer.job}
               />
-            );
-          })}
+            ))
+          ) : (
+            <TableRow>
+              <TableCell colSpan="6" align="center">
+                <CircularProgress
+                  sx={{ margin: 2 }}
+                  variant="determinate"
+                  value={completed}
+                />
+              </TableCell>
+            </TableRow>
+          )}
         </TableBody>
       </Table>
     </Paper>
