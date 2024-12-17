@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
 import Customer from "./components/Customer";
+import CustomerAdd from "./components/CustomerAdd";
 import {
   Table,
   TableHead,
@@ -52,45 +53,48 @@ function App() {
   };
 
   return (
-    <Paper sx={paperStyles}>
-      <Table sx={tableStyles}>
-        <TableHead>
-          <TableRow>
-            <TableCell>Num</TableCell>
-            <TableCell>Profile</TableCell>
-            <TableCell>Name</TableCell>
-            <TableCell>DOB</TableCell>
-            <TableCell>Gender</TableCell>
-            <TableCell>Job</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {customers.length > 0 ? (
-            customers.map((customer) => (
-              <Customer
-                key={customer.id}
-                id={customer.id}
-                image={customer.image}
-                name={customer.name}
-                birthday={customer.birthday}
-                gender={customer.gender}
-                job={customer.job}
-              />
-            ))
-          ) : (
+    <div>
+      <Paper sx={paperStyles}>
+        <Table sx={tableStyles}>
+          <TableHead>
             <TableRow>
-              <TableCell colSpan="6" align="center">
-                <CircularProgress
-                  sx={{ margin: 2 }}
-                  variant="determinate"
-                  value={completed}
-                />
-              </TableCell>
+              <TableCell>Num</TableCell>
+              <TableCell>Profile</TableCell>
+              <TableCell>Name</TableCell>
+              <TableCell>DOB</TableCell>
+              <TableCell>Gender</TableCell>
+              <TableCell>Job</TableCell>
             </TableRow>
-          )}
-        </TableBody>
-      </Table>
-    </Paper>
+          </TableHead>
+          <TableBody>
+            {customers.length > 0 ? (
+              customers.map((customer) => (
+                <Customer
+                  key={customer.id}
+                  id={customer.id}
+                  image={customer.image}
+                  name={customer.name}
+                  birthday={customer.birthday}
+                  gender={customer.gender}
+                  job={customer.job}
+                />
+              ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan="6" align="center">
+                  <CircularProgress
+                    sx={{ margin: 2 }}
+                    variant="determinate"
+                    value={completed}
+                  />
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </Paper>
+      <CustomerAdd />
+    </div>
   );
 }
 
