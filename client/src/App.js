@@ -78,6 +78,7 @@ function App() {
               <TableCell>DOB</TableCell>
               <TableCell>Gender</TableCell>
               <TableCell>Job</TableCell>
+              <TableCell>Setting</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -91,6 +92,7 @@ function App() {
                   birthday={customer.birthday}
                   gender={customer.gender}
                   job={customer.job}
+                  fetchData={fetchData}
                 />
               ))
             ) : (
