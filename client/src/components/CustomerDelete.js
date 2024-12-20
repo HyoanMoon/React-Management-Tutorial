@@ -1,6 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
 
 const CustomerDelete = ({ fetchData, id }) => {
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClickClose = () => {
+    setOpen(false);
+  };
+
   const deleteCustomer = (id) => {
     const url = "/api/customers/" + id;
     fetch(url, {
@@ -18,14 +33,33 @@ const CustomerDelete = ({ fetchData, id }) => {
 
   return (
     <div>
-      <button
+      <Button
+        variant="contained"
+        color="secondary"
         onClick={() => {
-          deleteCustomer(id);
+          handleClickOpen();
         }}
       >
-        {" "}
         Delete
-      </button>
+      </Button>
+      <Dialog open={open} onClose={handleClickClose}>
+        <DialogTitle>Confirm Delete</DialogTitle>
+        <DialogContent>
+          <Typography gutterBottom>This customer will be deleted</Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => deleteCustomer(id)}
+          >
+            Delete
+          </Button>
+          <Button variant="outlined" color="primary" onClick={handleClickClose}>
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };
