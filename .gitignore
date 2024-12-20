@@ -1,6 +1,9 @@
 #Database
 /database.json
 
+#upload
+/upload
+
 # Logs
 logs
 *.log

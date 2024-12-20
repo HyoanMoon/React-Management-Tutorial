@@ -2,19 +2,24 @@ import React, { useState } from "react";
 
 import axios from "axios";
 
-const CustomerAdd = () => {
+const CustomerAdd = ({ fetchData }) => {
   const [file, setFile] = useState(null);
   const [userName, setUserName] = useState("");
   const [birthday, setBirthday] = useState("");
   const [gender, setGender] = useState("");
   const [job, setJob] = useState("");
   const [fileName, setFileName] = useState("");
+  
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    addCustomer().then((response) => {
-      console.log(response.data);
-    });
+    addCustomer()
+      .then((response) => {
+        console.log("response", response);
+        fetchData();
+        resetForm();
+      })
+      .catch((error) => console.error("Error adding customer:", error));
   };
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
@@ -45,6 +50,15 @@ const CustomerAdd = () => {
     return axios.post(url, formData, config);
   };
 
+  const resetForm = () => {
+    setFile(null);
+    setUserName("");
+    setBirthday("");
+    setGender("");
+    setJob("");
+    setFileName("");
+  };
+
   return (
     <div>
       <form onSubmit={handleFormSubmit}>
@@ -52,7 +66,8 @@ const CustomerAdd = () => {
         Profile image:{" "}
         <input
           type="file"
-          name="file"
+          name="image"
+          value={fileName}
           onChange={handleFileChange}
         />{" "}
         <br />

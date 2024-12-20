@@ -29,16 +29,30 @@ function App() {
   }, []);
 
   // API 호출
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await fetch("/api/customers");
+  //       const res = await response.json();
+  //       setCustomers(res); // 테스트 후 활성화
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error);
+  //     }
+  //   };
+  //   fetchData();
+  // }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch("/api/customers");
+      const res = await response.json();
+      setCustomers(res); // 테스트 후 활성화
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("/api/customers");
-        const res = await response.json();
-        setCustomers(res); // 테스트 후 활성화
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
     fetchData();
   }, []);
 
@@ -93,7 +107,7 @@ function App() {
           </TableBody>
         </Table>
       </Paper>
-      <CustomerAdd />
+      <CustomerAdd fetchData={fetchData} />
     </div>
   );
 }
