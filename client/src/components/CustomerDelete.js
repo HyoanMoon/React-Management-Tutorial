@@ -45,7 +45,7 @@ const CustomerDelete = ({ fetchData, id }) => {
       <Dialog open={open} onClose={handleClickClose}>
         <DialogTitle>Confirm Delete</DialogTitle>
         <DialogContent>
-          <Typography gutterBottom>This customer will be deleted</Typography>
+          <Typography gutterBottom>Are you sure you want to delete this customer?</Typography>
         </DialogContent>
         <DialogActions>
           <Button
